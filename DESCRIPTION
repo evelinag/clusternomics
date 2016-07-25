@@ -19,7 +19,7 @@ Suggests:
     mclust,
     gplots,
     ggplot2
-URL: evelinag.com/clusternomics
+URL: https://github.com/evelinag/clusternomics
 BugReports: https://github.com/evelinag/clusternomics/issues
 RoxygenNote: 5.0.1
 VignetteBuilder: knitr
