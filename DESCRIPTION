@@ -5,7 +5,8 @@ Version: 0.1.0
 Author: Evelina Gabasova
 Maintainer: Evelina Gabasova <evelinat@evelinag.com>
 Description: Integrative context-dependent clustering for heterogeneous
-    biomedical datasets, based on nonparametric Bayesian mixture models.
+    biomedical datasets. Identifies local clustering structures in related
+    datasets, and a global clusters that exist across the datasets.
 License: MIT + file LICENSE
 LazyData: TRUE
 Imports:
