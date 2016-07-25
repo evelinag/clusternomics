@@ -44,7 +44,7 @@ These clusters correspond to the local clusters in the `clusternomics` package.
 On the global level, there are three distinct clusters that are only revealed when
 we look at the combination of local assignments within individual datasets.
 
-<img src="clustering_structure.png" style="width:300px" />
+![Illustration of local and global cluster structures](clustering_structure.png)
 
 ## Installation
 
