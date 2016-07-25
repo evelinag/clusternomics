@@ -1,15 +1,27 @@
+---
+output: github_document
+---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-Clusternomics
-=============
+
+```{r, echo = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "README-"
+)
+```
+
+# Clusternomics
 
 Integrative clustering for heterogeneous datasets.
 
 [![Build Status](https://travis-ci.org/evelinag/clusternomics.svg?branch=master)](https://travis-ci.org/evelinag/clusternomics)
 
-Installation
-------------
+## Installation
 
 Use the `devtools` package to get the current version of the package:
 
-    install_github("evelinag/clusternomics")
+```
+devtools::install_github("evelinag/clusternomics")
+```
