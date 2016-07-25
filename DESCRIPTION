@@ -1,0 +1,25 @@
+Package: clusternomics
+Type: Package
+Title: Integrative clustering for heterogeneous biomedical datasets
+Version: 0.1.0
+Author: Evelina Gabasova
+Maintainer: Evelina Gabasova <evelinat@evelinag.com>
+Description: Integrative context-dependent clustering for heterogeneous
+    biomedical datasets, based on nonparametric Bayesian mixture models.
+License: MIT + file LICENSE
+LazyData: TRUE
+Imports:
+    magrittr,
+    plyr,
+    MASS
+Suggests:
+    knitr,
+    rmarkdown,
+    testthat,
+    mclust,
+    gplots,
+    ggplot2
+URL: evelinag.com/clusternomics
+BugReports: https://github.com/evelinag/clusternomics/issues
+RoxygenNote: 5.0.1
+VignetteBuilder: knitr
