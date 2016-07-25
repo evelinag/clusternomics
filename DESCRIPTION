@@ -1,6 +1,6 @@
 Package: clusternomics
 Type: Package
-Title: Integrative clustering for heterogeneous biomedical datasets
+Title: Integrative Clustering for Heterogeneous Biomedical Datasets
 Version: 0.1.0
 Author: Evelina Gabasova
 Maintainer: Evelina Gabasova <evelina@evelinag.com>
