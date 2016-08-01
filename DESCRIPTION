@@ -2,7 +2,7 @@ Package: clusternomics
 Type: Package
 Title: Integrative Clustering for Heterogeneous Biomedical Datasets
 Version: 0.1.0
-Authors@R: c(person("Evelina", "Gabasova", email="evelina@evelinag.com", role=c("aut", "cre")),
+Authors@R: c(person("Evelina", "Gabasova", email="egabasova@gmail.com", role=c("aut", "cre")),
     person("John", "Reid", role="ctb"),
     person("Lorenz", "Wernisch", role="ctb"))
 Description: Integrative context-dependent clustering for heterogeneous
