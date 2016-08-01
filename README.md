@@ -26,7 +26,11 @@ The following diagram illustrates the distinction. When we look at the data sets
 Installation
 ------------
 
-Use the `devtools` package to get the current version of the package:
+You can get **clusternomics** from CRAN:
+
+    install.packages("clusternomics")
+
+Alternatively, use the `devtools` package to get the current development version of the package:
 
     devtools::install_github("evelinag/clusternomics")
 
