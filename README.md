@@ -21,7 +21,7 @@ The `clusternomics` algorithm identifies
 
 The following diagram illustrates the distinction. When we look at the data sets individually, context 1 contains three clusters and context 2 contains two clusters. These clusters correspond to the local clusters in the `clusternomics` package. On the global level, there are three distinct clusters that are only revealed when we look at the combination of local assignments within individual datasets.
 
-<img src="clustering_structure.png" alt="Illustration of local and global cluster structures" width="300" height="274">
+<img src="tools/clustering_structure.png" alt="Illustration of local and global cluster structures" width="300" height="274">
 
 Installation
 ------------
