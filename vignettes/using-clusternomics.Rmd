@@ -149,11 +149,34 @@ qplot(1:maxIter, logliks) + geom_line() +
   ylab("Log likelihood")
 ```
 
+### Choosing number of clusters
+
+As part of the training, we also compute the Deviance Information Criterion (DIC). The DIC is 
+a Bayesian model selection method that can be used to select the number of clusters. 
+The DIC value is returned in `results$DIC`.
+Models that better fit the data will result in lower values of DIC than worse models. For
+example, if we fit a model with number of clusters that is too small, we get higher DIC 
+value than for the original result. 
+
+```{r}
+wrongClusterCounts <- list(global=2, context=c(2,1))
+worseResults <- 
+  contextCluster(datasets, wrongClusterCounts, 
+              maxIter = maxIter, burnin = burnin, lag = lag,
+              dataDistributions = 'diagNormal',
+              verbose = F)
+
+print(paste('Original model has lower (better) DIC:', results$DIC))
+print(paste('Worse model has higher (worse) DIC:', worseResults$DIC))
+```
+
 ### Posterior number of clusters
 
 We can also look at the number of global clusters that were 
 identified in the datasets. The plot below shows the number of global
-clusters across MCMC samples.
+clusters across MCMC samples. This is the number of actually occupied global
+clusters, which can be smaller than the number of global clusters specified
+when running the `contextCluster` function.
 
 ```{r, fig.width=6}
 cc <- numberOfClusters(clusters)
@@ -163,7 +186,7 @@ qplot(seq(from=burnin, to = maxIter, by=lag), cc) +
 
 ### Sizes of clusters
 
-Here we look at the sizes of the individual global clusters 
+Here we look at the posterior sizes of the individual global clusters 
 across the MCMC iterations and then we show a box plot with the
 estimated sizes. The labels of global clusters represent the corresponding
 combinations of local clusters.
