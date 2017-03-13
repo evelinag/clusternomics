@@ -122,13 +122,13 @@ contextCluster <- function(datasets, clusterCounts,
     assignSamples[[iter]]$contextAssignments <- state$contextK
   }
   #****************
-  
+
   thinned_logliks <- getMCMCSamples(logliks, burnin, lag)
   thinned_samples <- getMCMCSamples(assignSamples, burnin, lag)
 
-  DIC <- computeDIC(thinned_logliks, thinned_samples, nDataPoints, 
-                    state$distributions, clusterCounts, prior)
-  
+  DIC <- computeDIC(thinned_logliks, thinned_samples, nDataPoints,
+                    state$distributions, clusterCounts, prior, datasets)
+
   assignments <-
     thinned_samples %>%
     llply(getClustersAssignments)
@@ -237,11 +237,11 @@ saveSample <- function(state, mapping, iter, filename) {
   close(fileConn)
 }
 
-computeDIC <- function(thinned_logliks, thinned_samples, nDataPoints, distributions, clusterCounts, prior) {
+computeDIC <- function(thinned_logliks, thinned_samples, nDataPoints, distributions, clusterCounts, prior, datasets) {
   D_bar <- -2 * mean(thinned_logliks)   # -2 * average posterior log likelihoods
   theta_bar <- c() # mean of posterior parameter samples
   # take the posterior mode - most common assignment of each data point
-  
+
   # most common global assignment for each data point
   modeDataAssignments <-
     1:nDataPoints %>%
@@ -269,14 +269,14 @@ computeDIC <- function(thinned_logliks, thinned_samples, nDataPoints, distributi
       modeContextAssignments[i,j] <- modeContextAssignmentsTmp[idx2d[,1] == i & idx2d[,2] == j]
     }
   }
-  
+
   modeState <- c()
   modeState$Z <- modeDataAssignments
   modeState$contextK <- modeContextAssignments
   modeState$distributions <- distributions
   modeState$clusterStats <-
     precomputeClusterStatistics(datasets, clusterCounts, modeState$Z, modeState$contextK, modeState$distributions)
-  
+
   # Compute log likelihood of the resulting state
   D_hat <- -2 * logJoint(modeState, prior, clusterCounts)
   p_D <- D_bar - D_hat
