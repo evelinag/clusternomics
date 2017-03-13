@@ -122,12 +122,18 @@ contextCluster <- function(datasets, clusterCounts,
     assignSamples[[iter]]$contextAssignments <- state$contextK
   }
   #****************
-  thinnedAssgn <- getMCMCSamples(assignSamples, burnin, lag)
+  
+  thinned_logliks <- getMCMCSamples(logliks, burnin, lag)
+  thinned_samples <- getMCMCSamples(assignSamples, burnin, lag)
+
+  DIC <- computeDIC(thinned_logliks, thinned_samples, nDataPoints, 
+                    state$distributions, clusterCounts, prior)
+  
   assignments <-
-    thinnedAssgn %>%
+    thinned_samples %>%
     llply(getClustersAssignments)
 
-  return(list(samples=assignments, logliks=logliks))
+  return(list(samples=assignments, logliks=logliks, DIC=DIC))
 }
 
 #========= Helper functions ========================
@@ -229,6 +235,53 @@ saveSample <- function(state, mapping, iter, filename) {
 
   writeLines(c(iter, t(contextClusters), t(assignments), t(globalClusters)) %>% paste(collapse=','), fileConn)
   close(fileConn)
+}
+
+computeDIC <- function(thinned_logliks, thinned_samples, nDataPoints, distributions, clusterCounts, prior) {
+  D_bar <- -2 * mean(thinned_logliks)   # -2 * average posterior log likelihoods
+  theta_bar <- c() # mean of posterior parameter samples
+  # take the posterior mode - most common assignment of each data point
+  
+  # most common global assignment for each data point
+  modeDataAssignments <-
+    1:nDataPoints %>%
+    laply(function(id) {thinned_samples %>% laply(function(s) s$dataAssignments[id])}) %>%
+    aaply(1, function(column) which.max(tabulate(column)))
+  idx2d <- # helper variable to get indices into 2d array
+    dim(thinned_samples[[1]]$contextAssignments) %>%
+    lapply(seq) %>%
+    expand.grid() %>%
+    as.matrix
+  modeContextAssignmentsTmp <-
+    idx2d %>%
+    aaply(1, function(x) {
+      i <- x[1]; j <- x[2]
+      thinned_samples %>%
+        laply(function(s) s$contextAssignments[i,j]) %>%
+        tabulate %>%
+        which.max
+    })
+  # reshape results
+  modeContextAssignments <-
+    matrix(nrow=nrow(thinned_samples[[1]]$contextAssignments), ncol=ncol(thinned_samples[[1]]$contextAssignments))
+  for (i in 1:nrow(modeContextAssignments)) {
+    for (j in 1:ncol(modeContextAssignments)) {
+      modeContextAssignments[i,j] <- modeContextAssignmentsTmp[idx2d[,1] == i & idx2d[,2] == j]
+    }
+  }
+  
+  modeState <- c()
+  modeState$Z <- modeDataAssignments
+  modeState$contextK <- modeContextAssignments
+  modeState$distributions <- distributions
+  modeState$clusterStats <-
+    precomputeClusterStatistics(datasets, clusterCounts, modeState$Z, modeState$contextK, modeState$distributions)
+  
+  # Compute log likelihood of the resulting state
+  D_hat <- -2 * logJoint(modeState, prior, clusterCounts)
+  p_D <- D_bar - D_hat
+  DIC <- p_D + D_bar
+  DIC
 }
 
 #========= Initialization ================

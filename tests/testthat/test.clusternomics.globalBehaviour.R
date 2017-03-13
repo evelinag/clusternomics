@@ -41,3 +41,23 @@ test_that("Clusternomics identifies well-separated clusters",{
   expect_equal(assgnEstim, assgnTrue)
 })
 
+
+
+test_that("BIC is lower for better model",{
+  set.seed(1)
+  groupCounts <- c(100, 70, 5, 100)
+  means <- c(-2.5,2.5)
+  testData <- generateTestData_2D(groupCounts, means)
+  datasets <- testData$data
+  fullDataDistributions <- rep('diagNormal', 2)
+  clusterCounts <- list(global=10, context=c(2,2))
+  nContexts <- length(clusterCounts$context)
+
+  result <- contextCluster(datasets,
+                           clusterCounts, "diagNormal", maxIter=500,
+                           prior=NULL, verbose = T)
+  resultWorse <- contextCluster(datasets,
+                                list(global=2, context=c(2,1)), "diagNormal", maxIter=500, prior=NULL, verbose = T)
+
+  expect_lt(result$DIC, resultWorse$DIC)
+})

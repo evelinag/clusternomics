@@ -26,11 +26,7 @@ The following diagram illustrates the distinction. When we look at the data sets
 Installation
 ------------
 
-You can get **clusternomics** from CRAN:
-
-    install.packages("clusternomics")
-
-Alternatively, use the `devtools` package to get the current development version of the package:
+Use the `devtools` package to get the current version of the package:
 
     devtools::install_github("evelinag/clusternomics")
 
@@ -38,3 +34,12 @@ Using clusternomics
 -------------------
 
 See the package vignette for usage on a simulated dataset.
+
+Datasets
+--------
+
+The package was tested using datasets originally downloaded from TCGA.
+
+-   [Breast cancer](https://s3-eu-west-1.amazonaws.com/eg-cu/tcga/Breast-TCGA.zip)
+-   [Kidney cancer](https://s3-eu-west-1.amazonaws.com/eg-cu/tcga/Kidney.zip)
+-   [Lung cancer](https://s3-eu-west-1.amazonaws.com/eg-cu/tcga/Lung.zip)
