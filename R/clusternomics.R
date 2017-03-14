@@ -33,6 +33,8 @@
 #'      each state \code{samples[[i]]} is a data frame with local and global assignments
 #'      for each data point.}
 #'   \item{logliks}{Log likelihoods during MCMC iterations.}
+#'   \item{DIC}{Deviance information criterion to help select the number of clusters. Lower
+#'      values of DIC correspond to better-fitting models.}
 #'
 #' @examples
 #' # Example with simulated data (see vignette for details)
@@ -61,6 +63,8 @@
 #' globalAssgn <- state$Global
 #' # 2) context-specific assignmnets- assignment in specific dataset (context)
 #' contextAssgn <- state[,"Context 1"]
+#' # Assess the fit of the model with DIC
+#' results$DIC
 #'
 #' @importFrom magrittr %>%
 #' @importFrom plyr aaply
