@@ -3,7 +3,7 @@ Type: Package
 Title: Integrative Clustering for Heterogeneous Biomedical Datasets
 Version: 0.1.1
 Author: Evelina Gabasova
-Maintainer: Evelina Gabasova <evelina@evelinag.com>
+Maintainer: Evelina Gabasova <egabasova@gmail.com>
 Description: Integrative context-dependent clustering for heterogeneous
     biomedical datasets. Identifies local clustering structures in related
     datasets, and a global clusters that exist across the datasets.
