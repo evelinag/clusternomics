@@ -14,7 +14,8 @@ test_that("Clusternomics identifies well-separated clusters",{
   nContexts <- length(clusterCounts$context)
 
   result <- contextCluster(datasets,
-              clusterCounts, "diagNormal", maxIter=500,
+              clusterCounts, "diagNormal", maxIter=200,
+              burnin = 100,
               prior=NULL, verbose = T)
 
   samples <- result$samples
@@ -54,10 +55,12 @@ test_that("BIC is lower for better model",{
   nContexts <- length(clusterCounts$context)
 
   result <- contextCluster(datasets,
-                           clusterCounts, "diagNormal", maxIter=500,
+                           clusterCounts, "diagNormal", maxIter=100, burnin=50,
                            prior=NULL, verbose = T)
-  resultWorse <- contextCluster(datasets,
-                                list(global=2, context=c(2,1)), "diagNormal", maxIter=500, prior=NULL, verbose = T)
+  resultWorse <-
+    contextCluster(datasets,
+                   list(global=2, context=c(2,1)), "diagNormal",
+                   maxIter=100, burnin=50, prior=NULL, verbose = T)
 
   expect_lt(result$DIC, resultWorse$DIC)
 })

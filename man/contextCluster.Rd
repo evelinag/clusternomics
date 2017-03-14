@@ -47,6 +47,8 @@ Returns list containing the sequence of MCMC states and the log likelihoods of
      each state \code{samples[[i]]} is a data frame with local and global assignments
      for each data point.}
   \item{logliks}{Log likelihoods during MCMC iterations.}
+  \item{DIC}{Deviance information criterion to help select the number of clusters. Lower
+     values of DIC correspond to better-fitting models.}
 }
 \description{
 This function fits the context-dependent clustering model
@@ -80,6 +82,8 @@ state <- results$samples[[length(results$samples)]]
 globalAssgn <- state$Global
 # 2) context-specific assignmnets- assignment in specific dataset (context)
 contextAssgn <- state[,"Context 1"]
+# Assess the fit of the model with DIC
+results$DIC
 
 }
 
