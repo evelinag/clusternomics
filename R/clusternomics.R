@@ -81,7 +81,8 @@ contextCluster <- function(datasets, clusterCounts,
   nDataPoints <- dim(datasets[[1]])[1]
   nContexts <- length(datasets)
   # check if the number of contexts = length(clusterCounts)
-  if (nContexts != length(clusterCounts)) stop("Number of datasets is different from number of contexts.")
+  if (nContexts != length(clusterCounts$context))
+    stop("Number of datasets is different from number of contexts.")
 
   # check if the number of data points is the same in all contexts
   if (sum(laply(datasets, function(dt) nrow(dt) == nDataPoints)) != nContexts) {
